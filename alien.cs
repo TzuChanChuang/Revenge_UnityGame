@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class alien : MonoBehaviour {
 	public int blood;
+	Text blood_left;
 	private GameObject[] players;
 	//players
 	private GameObject player_right;
@@ -28,6 +30,9 @@ public class alien : MonoBehaviour {
 	private int speed = 4;
 	void Start(){
 		blood = 100;
+		blood_left=  GameObject.FindWithTag("Txt_Blood").gameObject.GetComponent<Text>();
+		blood_left.text = blood.ToString ();
+
 		players = GameObject.FindGameObjectsWithTag ("Alien");
 		for (int i=0; i<players.Length;i++){
 			players[i].SetActive(false);
@@ -162,6 +167,7 @@ public class alien : MonoBehaviour {
 	void OnCollisionStay2D(Collision2D collider){
 		if(collider.gameObject.tag.Equals("enemy") && blood>0 && collision_time>=1.5){
 			blood-=5;
+			blood_left.text = blood.ToString ();
 			player_right.GetComponent<Animator> ().SetBool ("Attacked", true);
 			player_left.GetComponent<Animator> ().SetBool ("Attacked", true);
 			player_up.GetComponent<Animator> ().SetBool ("Attacked", true);

@@ -6,6 +6,8 @@ public class bullet : MonoBehaviour {
 	public int moveSpeed = 20;
 	Text G8Left;
 	public float g8_count; 
+	public Transform Stick;
+	public Transform Stick_createpoint;
 	// Use this for initialization
 	void Start () {
 		G8Left =  GameObject.FindWithTag("Txt_G8Left").gameObject.GetComponent<Text>();
@@ -27,6 +29,8 @@ public class bullet : MonoBehaviour {
 			//Debug.Log(g8_count);
 			G8Left.text = g8_count.ToString();
 			Destroy (this.gameObject);
+			Instantiate(Stick, Stick_createpoint.position,Quaternion.Euler(0f, 0f, 0f));
+
 			if(g8_count==0){
 				Time.timeScale = 0.0f; 
 			}
