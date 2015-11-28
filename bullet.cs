@@ -4,11 +4,12 @@ using UnityEngine.UI;
 
 public class bullet : MonoBehaviour {
 	public int moveSpeed = 20;
-	private int mouse_left = 20;	//initial
-	//public Text YouWinText;
+	Text G8Left;
+	public float g8_count; 
 	// Use this for initialization
 	void Start () {
-		//YouWinText.GetComponents<Text>() = "G8 left: " + mouse_left;
+		G8Left =  GameObject.FindWithTag("Txt_G8Left").gameObject.GetComponent<Text>();
+		//Debug.Log (G8Left.text);
 	}
 	
 	// Update is called once per frame
@@ -20,14 +21,15 @@ public class bullet : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collider){
 		if (collider.gameObject.tag.Equals("enemy")) {
-			Destroy(collider.gameObject, 0.1f);
+			Destroy(collider.gameObject, 0.0f);
+			g8_count = int.Parse(G8Left.text)-1;
+			//Debug.Log(g8_count);
+			G8Left.text = g8_count.ToString();
 			Destroy (this.gameObject);
-			if(mouse_left>0){
-				mouse_left--;
-				//YouWinText.GetComponents<Text> = "G8 left: " + mouse_left;
-			}else{
-				Time.timeScale = 0.0f;
+			if(g8_count==0){
+				Time.timeScale = 0.0f; 
 			}
+
 		}
 
 	}

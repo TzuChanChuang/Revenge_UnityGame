@@ -10,7 +10,7 @@ public class enemy : MonoBehaviour {
 	private float time;
 	// Use this for initialization
 	void Start () {
-		enemy_upperbound =20;
+		enemy_upperbound =10;
 		enemy_num = 0;
 		time = 0f;
 	}
