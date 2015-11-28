@@ -91,7 +91,8 @@ public class alien : MonoBehaviour {
 		if (move.joystickName == "AttackJoystick") {
 			float joyPositionX = move.joystickAxis.x;
 			float joyPositionY = move.joystickAxis.y;
-
+			float r = Mathf.Sqrt(Mathf.Pow(joyPositionX,2) + Mathf.Pow(joyPositionY,2));
+			float angle = (Mathf.Asin(joyPositionY/r)* 180) / Mathf.PI;
 			if (joyPositionX > 0 && joyPositionY < Mathf.Sqrt(0.5f) && joyPositionY > -Mathf.Sqrt(0.5f) && Mathf.Abs(joyPositionX)>=Mathf.Abs(joyPositionY)) {//turn right
 				player_left.SetActive (false);
 				player_up.SetActive (false);
@@ -99,7 +100,7 @@ public class alien : MonoBehaviour {
 				player_right.SetActive (true);
 				if(Weapon==1&& firetime>=0.2f){
 					//shoot
-					Instantiate(Weapon_bullet, firePoint_right.position,Quaternion.Euler(0f, 0f, -90f));
+					Instantiate(Weapon_bullet, firePoint_right.position,Quaternion.Euler(0f, 0f, angle-90f));
 					firetime = 0;
 				}
 			} else if(joyPositionX < 0 && joyPositionY < Mathf.Sqrt(0.5f) && joyPositionY > -Mathf.Sqrt(0.5f)&& Mathf.Abs(joyPositionX)>=Mathf.Abs(joyPositionY)) {//turn left
@@ -109,7 +110,7 @@ public class alien : MonoBehaviour {
 				player_left.SetActive (true);
 				if(Weapon==1&& firetime>=0.2f){
 					//shoot
-					Instantiate(Weapon_bullet, firePoint_left.position,Quaternion.Euler(0f, 0f, 90f));
+					Instantiate(Weapon_bullet, firePoint_left.position,Quaternion.Euler(0f, 0f, -(angle-90f)));
 					firetime = 0;
 				}
 			}else if(joyPositionY > 0 && joyPositionX < Mathf.Sqrt(0.5f) && joyPositionX > -Mathf.Sqrt(0.5f)) {//turn up
@@ -119,7 +120,11 @@ public class alien : MonoBehaviour {
 				player_left.SetActive (false);
 				if(Weapon==1&& firetime>=0.2f){
 					//shoot
-					Instantiate(Weapon_bullet, firePoint_up.position,Quaternion.Euler(0f, 0f, 0f));
+					if(joyPositionX < 0){
+						Instantiate(Weapon_bullet, firePoint_up.position,Quaternion.Euler(0f, 0f, -(angle-90f)));
+					}else{
+						Instantiate(Weapon_bullet, firePoint_up.position,Quaternion.Euler(0f, 0f, angle-90f));
+					}
 					firetime = 0;
 				}
 			}else if(joyPositionY < 0 && joyPositionX < Mathf.Sqrt(0.5f) && joyPositionX > -Mathf.Sqrt(0.5f)) {//turn down
@@ -129,11 +134,14 @@ public class alien : MonoBehaviour {
 				player_left.SetActive (false);
 				if(Weapon==1 && firetime>=0.2f){
 					//shoot
-					Instantiate(Weapon_bullet, firePoint_down.position,Quaternion.Euler(0f, 0f, 180f));
+					if(joyPositionX < 0){
+						Instantiate(Weapon_bullet, firePoint_down.position,Quaternion.Euler(0f, 0f, -(angle-90f)));
+					}else{
+						Instantiate(Weapon_bullet, firePoint_down.position,Quaternion.Euler(0f, 0f, angle-90f));
+					}
 					firetime = 0;
 				}
 			}
-
 		}
 	} 
 	void On_ButtonUp(string buttonName){
@@ -162,31 +170,11 @@ public class alien : MonoBehaviour {
 		}
 		collision_time += Time.deltaTime;
 	}
-	/*void OnTriggerStay2D(Collider2D collider){
-		if(collider.gameObject.tag.Equals("enemy") && blood>0 && collision_time>=1.5){
-			blood-=5;
-			player_right.GetComponent<Animator> ().SetBool ("Attacked", true);
-			player_left.GetComponent<Animator> ().SetBool ("Attacked", true);
-			player_up.GetComponent<Animator> ().SetBool ("Attacked", true);
-			player_down.GetComponent<Animator> ().SetBool ("Attacked", true);
-			collision_time =0;
-		}
-		collision_time += Time.deltaTime;
-	}*/
 	void OnCollisionExit2D(Collision2D collider){
-		Debug.Log("Exit");
 		player_right.GetComponent<Animator> ().SetBool ("Attacked", false);
 		player_left.GetComponent<Animator> ().SetBool ("Attacked", false);
 		player_up.GetComponent<Animator> ().SetBool ("Attacked", false);
 		player_down.GetComponent<Animator> ().SetBool ("Attacked", false);
 		collision_time =3;
 	}
-	/*void OnTriggerExit2D(Collider2D collider){
-		Debug.Log("Exit");
-		player_right.GetComponent<Animator> ().SetBool ("Attacked", false);
-		player_left.GetComponent<Animator> ().SetBool ("Attacked", false);
-		player_up.GetComponent<Animator> ().SetBool ("Attacked", false);
-		player_down.GetComponent<Animator> ().SetBool ("Attacked", false);
-		collision_time =3;
-	}*/
 }
