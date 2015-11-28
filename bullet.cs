@@ -21,7 +21,8 @@ public class bullet : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collider){
 		if (collider.gameObject.tag.Equals("enemy")) {
-			Destroy(collider.gameObject, 0.0f);
+			//Destroy(collider.gameObject, 0.0f);
+			collider.gameObject.transform.GetChild(0).gameObject.SetActive(false);
 			g8_count = int.Parse(G8Left.text)-1;
 			//Debug.Log(g8_count);
 			G8Left.text = g8_count.ToString();

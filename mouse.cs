@@ -24,21 +24,26 @@ public class mouse : MonoBehaviour {
 		float tar_pos_x = target.transform.position.x;
 		float tar_pos_y = target.transform.position.y;
 		//float tar_pos_z = target.transform.position.z;
-		if (Mathf.Sqrt (Mathf.Pow (transform.position.x - tar_pos_x, 2) + Mathf.Pow (transform.position.y - tar_pos_y, 2)) < 7) {
-			transform.LookAt (target.transform); 
-			transform.Rotate (0, -90, -90);
+		if (this.gameObject.transform.GetChild (0).gameObject.activeSelf == false) {
+			transform.rotation = Quaternion.Euler (0f, 0f, 180f);
+			transform.position += transform.up * Time.deltaTime *2000;
+			Destroy(this);
 		} else {
-			if (transform.position.x >= 20 || transform.position.x <= -18 || transform.position.y >= 7 || transform.position.y <= -10) {
-				transform.LookAt (mouse_ini_pos); 
+			if (Mathf.Sqrt (Mathf.Pow (transform.position.x - tar_pos_x, 2) + Mathf.Pow (transform.position.y - tar_pos_y, 2)) < 7) {
+				transform.LookAt (target.transform); 
 				transform.Rotate (0, -90, -90);
-				time = 1;
-			} else if (time > 3) {
-				random_dir = Random.Range (0, 360);
-				transform.rotation = Quaternion.Euler (0f, 0f, random_dir);
-				time = 0;
+			} else {
+				if (transform.position.x >= 20 || transform.position.x <= -18 || transform.position.y >= 7 || transform.position.y <= -10) {
+					transform.LookAt (mouse_ini_pos); 
+					transform.Rotate (0, -90, -90);
+					time = 1;
+				} else if (time > 3) {
+					random_dir = Random.Range (0, 360);
+					transform.rotation = Quaternion.Euler (0f, 0f, random_dir);
+					time = 0;
+				}
 			}
 		}
-		//Debug.LogError ("mouse_ini_pos: " + mouse_ini_pos);
 	}
 	
 }

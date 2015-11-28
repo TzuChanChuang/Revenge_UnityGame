@@ -162,11 +162,31 @@ public class alien : MonoBehaviour {
 		}
 		collision_time += Time.deltaTime;
 	}
+	/*void OnTriggerStay2D(Collider2D collider){
+		if(collider.gameObject.tag.Equals("enemy") && blood>0 && collision_time>=1.5){
+			blood-=5;
+			player_right.GetComponent<Animator> ().SetBool ("Attacked", true);
+			player_left.GetComponent<Animator> ().SetBool ("Attacked", true);
+			player_up.GetComponent<Animator> ().SetBool ("Attacked", true);
+			player_down.GetComponent<Animator> ().SetBool ("Attacked", true);
+			collision_time =0;
+		}
+		collision_time += Time.deltaTime;
+	}*/
 	void OnCollisionExit2D(Collision2D collider){
+		Debug.Log("Exit");
 		player_right.GetComponent<Animator> ().SetBool ("Attacked", false);
 		player_left.GetComponent<Animator> ().SetBool ("Attacked", false);
 		player_up.GetComponent<Animator> ().SetBool ("Attacked", false);
 		player_down.GetComponent<Animator> ().SetBool ("Attacked", false);
 		collision_time =3;
 	}
+	/*void OnTriggerExit2D(Collider2D collider){
+		Debug.Log("Exit");
+		player_right.GetComponent<Animator> ().SetBool ("Attacked", false);
+		player_left.GetComponent<Animator> ().SetBool ("Attacked", false);
+		player_up.GetComponent<Animator> ().SetBool ("Attacked", false);
+		player_down.GetComponent<Animator> ().SetBool ("Attacked", false);
+		collision_time =3;
+	}*/
 }
