@@ -165,16 +165,18 @@ public class alien : MonoBehaviour {
 		}
 	}
 	void OnCollisionStay2D(Collision2D collider){
-		if(collider.gameObject.tag.Equals("enemy") && blood>0 && collision_time>=1.5){
-			blood-=5;
-			blood_left.text = blood.ToString ();
+		if(collider.gameObject.tag.Equals("enemy")){
 			player_right.GetComponent<Animator> ().SetBool ("Attacked", true);
 			player_left.GetComponent<Animator> ().SetBool ("Attacked", true);
 			player_up.GetComponent<Animator> ().SetBool ("Attacked", true);
 			player_down.GetComponent<Animator> ().SetBool ("Attacked", true);
-			collision_time =0;
+			if(blood>0 && collision_time>=1.5){
+				blood-=5;
+				blood_left.text = blood.ToString ();
+				collision_time =0;
+			}
+			collision_time += Time.deltaTime;
 		}
-		collision_time += Time.deltaTime;
 	}
 	void OnCollisionExit2D(Collision2D collider){
 		player_right.GetComponent<Animator> ().SetBool ("Attacked", false);
